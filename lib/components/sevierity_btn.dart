@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/components/stop_btn.dart';
 
@@ -8,15 +10,34 @@ class condition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(
-          title: const Text('enter the type of consequence'),
+       
         ),
         body: Center(
+        
+          
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              
+             const Padding(padding:EdgeInsets.all(16.0),
+             child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text("click the situation:-",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+
+              ),
+              textAlign: TextAlign.left,
+              ),
+             ), 
+             ),
+             const SizedBox(height: 30,),
               ElevatedButton(
                 onPressed: () {
+                  _insertClickEvent("red");
                   
                   Navigator.push(context, MaterialPageRoute(
           builder: (builder)=>const StopBtn()
@@ -26,7 +47,7 @@ class condition extends StatelessWidget {
                 },
                  style: ElevatedButton.styleFrom(
           primary:Colors.red ,
-          minimumSize: Size(200, 60),
+          minimumSize: const Size(200, 60),
 
         ),
                 child: const Text('High',
@@ -41,6 +62,7 @@ class condition extends StatelessWidget {
               const SizedBox(height: 16), 
               ElevatedButton(
                 onPressed: () {
+                  _insertClickEvent("yellow");
                   Navigator.push(context, MaterialPageRoute(
           builder: (builder)=>const StopBtn()
           
@@ -62,6 +84,7 @@ class condition extends StatelessWidget {
               const SizedBox(height: 16), 
               ElevatedButton(
                 onPressed: () {
+                  _insertClickEvent("green");
                   Navigator.push(context, MaterialPageRoute(
           builder: (builder)=>const StopBtn()));
                 },
@@ -82,4 +105,22 @@ class condition extends StatelessWidget {
         ),
       );
   }
+}
+Future<void> 
+_insertClickEvent(String color)async{
+  CollectionReference sevierity = FirebaseFirestore.instance.collection("clicks");
+  //get current timestamp
+  final Timestamp= DateTime.now().toLocal().toString();
+
+  
+   //get the user name
+  String?_emailController=FirebaseAuth.instance.currentUser?.email;
+
+  //Insert data in firestore
+  await sevierity.add({
+    "timestamp": Timestamp,
+     "color": color,
+     "email":_emailController,
+
+  });
 }

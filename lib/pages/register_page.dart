@@ -35,11 +35,9 @@ final void Function()? onTap;
       }
     }
     //password doesn't match
-    showDialog(context: context, builder:(context)=>const AlertDialog(
-          title: Text("password doesn't match"
-          ),
-        )
-        );
+    //showDialog(context: context, builder:(context)=>const AlertDialog(
+         // title: Text("password match"),));
+      
    }
 
   @override

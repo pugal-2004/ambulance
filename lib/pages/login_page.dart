@@ -68,18 +68,7 @@ final void Function()? onTap;
               ),
             ),
             const SizedBox( height: 25,),
-            //bk image
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white60,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(60),
-                  topRight: Radius.circular(60),
-                )
-
-              ),
             
-            ),
 
             
             //email TextField
@@ -110,7 +99,7 @@ final void Function()? onTap;
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Not a member? "),
+                const Text("Not a member? "),
                 GestureDetector(
                   onTap: onTap,
                   child: Text("Register Now",

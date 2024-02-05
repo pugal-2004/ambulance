@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -27,23 +28,24 @@ User?userId = FirebaseAuth.instance.currentUser;
       //logout button
       IconButton(onPressed: logout, icon: const Icon(Icons.logout))
     ],
+   backgroundColor: Theme.of(context).colorScheme.background,
   
     ),
     
     drawer: MyDrawer(),
+ 
+    
     body: Center(
+      
       child: Column(
+        
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //logo
-        Image.asset("assests/flutter1.jpg",
-        width: 180,
-        ),
-        SizedBox(height: 10,),
-        
+          
+          
         
         //Text
-        Text(
+        const Text(
               "Welcome Driver",
               style: TextStyle(
                 color: Colors.black87,
@@ -52,11 +54,13 @@ User?userId = FirebaseAuth.instance.currentUser;
               ),
             ),
             const SizedBox( height: 25,),
+            
+          
         
         //strt button
         ElevatedButton(
         onPressed: () {
-          
+         _insertClickEvent("start"); 
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => const  condition()));
        
@@ -74,7 +78,9 @@ User?userId = FirebaseAuth.instance.currentUser;
         ),
         ),
         ),
-      ],),
+        
+        ],
+        ),
     
       
       
@@ -82,4 +88,21 @@ User?userId = FirebaseAuth.instance.currentUser;
      ),
     );
   }
+}
+Future<void> 
+_insertClickEvent(String labelText)async{
+  CollectionReference sevierity = FirebaseFirestore.instance.collection("clicks");
+  //get current timestamp
+  final Timestamp= DateTime.now().toLocal().toString();
+
+  //get the user name
+  String?_emailController=FirebaseAuth.instance.currentUser?.email;
+
+  //Insert data in firestore
+  await sevierity.add({
+    "timestamp": Timestamp,
+    "labelText":labelText,
+    "email":_emailController,
+
+  });
 }
