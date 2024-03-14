@@ -2,13 +2,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:project/auth/auth_service.dart';
-
 import 'package:project/components/my_drawer.dart';
 import 'package:project/components/sevierity_btn.dart';
-
-
 
 // ignore: must_be_immutable
 class  HomePage extends StatelessWidget {
@@ -59,12 +56,15 @@ User?userId = FirebaseAuth.instance.currentUser;
         
         //strt button
         ElevatedButton(
-        onPressed: () {
-         _insertClickEvent("start"); 
+        onPressed: () async{
+          //current location
+          Position position=await Geolocator.getCurrentPosition(
+            desiredAccuracy:LocationAccuracy.high );
+         _insertClickEvent("start",position);
+         
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => const  condition()));
-       
-        }, 
+        },
         style: ElevatedButton.styleFrom(
           primary:Colors.deepPurple ,
           minimumSize: Size(200, 60),
@@ -81,16 +81,12 @@ User?userId = FirebaseAuth.instance.currentUser;
         
         ],
         ),
-    
-      
-      
-       
-     ),
+    ),
     );
   }
 }
-Future<void> 
-_insertClickEvent(String labelText)async{
+Future<void>
+_insertClickEvent(String labelText, Position position)async{
   CollectionReference sevierity = FirebaseFirestore.instance.collection("clicks");
   //get current timestamp
   final Timestamp= DateTime.now().toLocal().toString();
@@ -103,6 +99,8 @@ _insertClickEvent(String labelText)async{
     "timestamp": Timestamp,
     "labelText":labelText,
     "email":_emailController,
+    "latitude": position.latitude,
+    "longitude": position.longitude,
 
   });
 }

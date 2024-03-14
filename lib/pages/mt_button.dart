@@ -14,16 +14,23 @@ final String text;
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: 270,
         decoration: BoxDecoration(
-          color:Colors.purple,
-          borderRadius: BorderRadius.circular(8),
+          color:Colors.amber[900],
+          
+          borderRadius: BorderRadius.circular(40),
         ),
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(20),
         margin: const EdgeInsets.symmetric(horizontal: 25),
       
       
         child: Center(
-          child: Text(text),
+          child: Text(text,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          ),
         ),
       ),
     );

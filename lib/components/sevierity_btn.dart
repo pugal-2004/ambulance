@@ -40,7 +40,7 @@ class condition extends StatelessWidget {
                   _insertClickEvent("red");
                   
                   Navigator.push(context, MaterialPageRoute(
-          builder: (builder)=>const StopBtn()
+          builder: (builder)=> StopBtn()
           
         ));
                   
@@ -64,7 +64,7 @@ class condition extends StatelessWidget {
                 onPressed: () {
                   _insertClickEvent("yellow");
                   Navigator.push(context, MaterialPageRoute(
-          builder: (builder)=>const StopBtn()
+          builder: (builder)=> StopBtn()
           
         ));
 
@@ -86,7 +86,7 @@ class condition extends StatelessWidget {
                 onPressed: () {
                   _insertClickEvent("green");
                   Navigator.push(context, MaterialPageRoute(
-          builder: (builder)=>const StopBtn()));
+          builder: (builder)=>StopBtn()));
                 },
                  style: ElevatedButton.styleFrom(
           primary:Colors.green,
